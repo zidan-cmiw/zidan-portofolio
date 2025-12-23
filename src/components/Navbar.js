@@ -58,9 +58,14 @@ export default function Navbar() {
       display: "flex",
       alignItems: "center",
       justifyContent: "center",
-      transition: "background-color 0.4s ease, box-shadow 0.4s ease",
-      backgroundColor: isScrolled ? "rgba(255, 255, 255, 0.98)" : "#050505",
-      boxShadow: isScrolled ? "0 4px 20px rgba(0,0,0,0.05)" : "none",
+      transition: "all 0.4s ease", // Transisi halus
+      
+      // PERBAIKAN DI SINI:
+      // Kalo discroll -> Hitam Transparan + Blur (Glass Effect)
+      // Kalo diatas -> Transparan total
+      backgroundColor: isScrolled ? "rgba(5, 5, 5, 0.85)" : "transparent",
+      backdropFilter: isScrolled ? "blur(12px)" : "none", 
+      borderBottom: isScrolled ? "1px solid rgba(255,255,255,0.05)" : "none", // Garis tipis premium
     },
     container: {
       width: "100%",
@@ -76,7 +81,7 @@ export default function Navbar() {
       letterSpacing: "-1px",
       textDecoration: "none",
       cursor: "pointer",
-      color: isScrolled ? "black" : "white", // Logo berubah warna
+      color: "white", // FIX: Selalu Putih (Jangan hitam)
       transition: "color 0.4s ease",
     },
     menu: {
@@ -94,7 +99,7 @@ export default function Navbar() {
       cursor: "pointer",
       paddingBottom: "5px",
       position: "relative",
-      color: isScrolled ? "#000" : "#fff", 
+      color: "white", // FIX: Default Putih
     },
   };
 
@@ -108,32 +113,27 @@ export default function Navbar() {
             ZIDAN<span style={{ color: "#00ff44" }}>.</span>
           </div>
 
-          {/* MENU (PASTI MUNCUL) */}
+          {/* MENU */}
           <div style={styles.menu}>
             {["home", "about", "projects", "contact"].map((item, i) => {
               const isActive = activeLink === item;
               
-              // Logika Warna Final
-              let textColor;
-              if (isActive) {
-                textColor = "#00ff44"; // Kalau aktif: Hijau
-              } else if (isScrolled) {
-                textColor = "black";   // Kalau di bawah: Hitam
-              } else {
-                textColor = "white";   // Kalau di atas: Putih
-              }
+              // FIX: Teks selalu Putih (atau Hijau kalau aktif), tidak pernah Hitam
+              const textColor = isActive ? "#00ff44" : "white";
 
               return (
                 <a 
                   key={i} 
                   href={`#${item}`} 
-                  // Kita hapus class 'nav-item' biar gak kena efek GSAP yang salah
                   style={{
                     ...styles.link,
                     color: textColor,
-                    borderBottom: isActive ? "2px solid #00ff44" : "2px solid transparent"
+                    borderBottom: isActive ? "2px solid #00ff44" : "2px solid transparent",
+                    opacity: isActive ? 1 : 0.8 // Efek redup dikit kalau gak aktif
                   }}
                   onClick={() => setActiveLink(item)}
+                  onMouseEnter={(e) => e.target.style.opacity = 1}
+                  onMouseLeave={(e) => { if(!isActive) e.target.style.opacity = 0.8 }}
                 >
                   {item.toUpperCase()}
                 </a>
