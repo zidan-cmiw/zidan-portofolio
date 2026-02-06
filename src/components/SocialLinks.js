@@ -18,7 +18,7 @@ export default function SocialLinks() {
             key={i}
             href={link.url}
             target="_blank"
-            className="group relative text-[10px] md:text-xs font-bold tracking-[0.25em] text-gray-500 hover:text-black transition-all duration-500 uppercase no-underline"
+            className="group relative text-[20px] font-bold tracking-[0.25em] text-gray-500 hover:text-black transition-all duration-500 uppercase no-underline"
           >
             {link.name}
             <span className="absolute -bottom-3 left-0 w-0 h-[1px] bg-black transition-all duration-500 group-hover:w-full"></span>

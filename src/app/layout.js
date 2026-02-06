@@ -12,6 +12,9 @@ const dmSans = DM_Sans({
 export const metadata = {
   title: "Zidan Portfolio",
   description: "Full Stack Developer Portfolio",
+  icons: {
+    icon: '/favicon.png',
+  },
 };
 
 export default function RootLayout({ children }) {

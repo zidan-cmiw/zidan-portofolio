@@ -55,9 +55,11 @@ export default function Navbar() {
       alignItems: "center",
       justifyContent: "center",
       transition: "all 0.4s ease", 
-      backgroundColor: isScrolled ? "rgba(5, 5, 5, 0.85)" : "transparent",
+      backgroundColor: isScrolled ? "rgba(255, 255, 255, 0.85)" : "rgba(255, 255, 255, 1)",
       backdropFilter: isScrolled ? "blur(12px)" : "none", 
-      borderBottom: isScrolled ? "1px solid rgba(255,255,255,0.05)" : "none", },
+      borderBottom: isScrolled ? "1px solid rgba(0,0,0,0.1)" : "none", 
+      boxShadow: isScrolled ? "0 2px 10px rgba(0,0,0,0.05)" : "none",
+    },
     container: {
       width: "100%",
       maxWidth: "1400px",
@@ -72,7 +74,7 @@ export default function Navbar() {
       letterSpacing: "-1px",
       textDecoration: "none",
       cursor: "pointer",
-      color: "white",
+      color: "black",
       transition: "color 0.4s ease",
     },
     menu: {
@@ -90,7 +92,7 @@ export default function Navbar() {
       cursor: "pointer",
       paddingBottom: "5px",
       position: "relative",
-      color: "white", 
+      color: "black", 
     },
   };
 
@@ -100,12 +102,21 @@ export default function Navbar() {
         <div style={styles.container}>
           
           <div className="nav-item" style={styles.logo}>
-            ZIDAN<span style={{ color: "#00ff44" }}>.</span>
+            <img 
+              src="/logo.png" 
+              alt="Zidan Logo" 
+              style={{ 
+                height: '30px', 
+                width: 'auto',
+                cursor: 'pointer'
+              }}
+              onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
+            />
           </div>
             <div style={styles.menu}>
             {["home", "about", "projects", "contact"].map((item, i) => {
               const isActive = activeLink === item;
-              const textColor = isActive ? "#00ff44" : "white";
+              const textColor = isActive ? "#000000" : "#000000";
 
               return (
                 <a 
@@ -114,12 +125,25 @@ export default function Navbar() {
                   style={{
                     ...styles.link,
                     color: textColor,
-                    borderBottom: isActive ? "2px solid #00ff44" : "2px solid transparent",
-                    opacity: isActive ? 1 : 0.8 
+                    borderBottom: isActive ? "2px solid #000000" : "2px solid transparent",
+                    opacity: isActive ? 1 : 0.6 
                   }}
-                  onClick={() => setActiveLink(item)}
+                  onClick={(e) => {
+                    e.preventDefault();
+                    setActiveLink(item);
+                    const element = document.getElementById(item);
+                    if (element) {
+                      const navbarHeight = 80;
+                      const extraOffset = (item === 'about' || item === 'projects') ? 0 : 50;
+                      const offsetPosition = element.offsetTop - navbarHeight - extraOffset;
+                      window.scrollTo({
+                        top: offsetPosition,
+                        behavior: 'smooth'
+                      });
+                    }
+                  }}
                   onMouseEnter={(e) => e.target.style.opacity = 1}
-                  onMouseLeave={(e) => { if(!isActive) e.target.style.opacity = 0.8 }}
+                  onMouseLeave={(e) => { if(!isActive) e.target.style.opacity = 0.6 }}
                 >
                   {item.toUpperCase()}
                 </a>

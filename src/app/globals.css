@@ -6,8 +6,51 @@ html, body {
   margin: 0;
   padding: 0;
   overflow-x: hidden;
+  background-color: transparent;
+}
+
+main {
+  background-color: transparent !important;
 }
 
 html {
   scroll-behavior: smooth;
+}
+
+.download-cv-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  padding: 14px 32px;
+  background: linear-gradient(135deg, #4a5568 0%, #2d3748 100%);
+  color: white;
+  font-size: 16px;
+  font-weight: 600;
+  border: none;
+  border-radius: 12px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.download-cv-btn:hover {
+  transform: scale(1.05);
+  box-shadow: 0 10px 15px rgba(0, 0, 0, 0.2);
+}
+
+.download-cv-btn svg {
+  width: 20px;
+  height: 20px;
+  flex-shrink: 0;
+}
+
+#about {
+  background-color: #f3f4f6 !important;
+  padding-left: 50px !important;
+  padding-right: 50px !important;
+}
+
+#contact {
+  background-color: #f3f4f6 !important;
 }
