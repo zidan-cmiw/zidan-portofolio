@@ -5,10 +5,9 @@
 html, body {
   margin: 0;
   padding: 0;
-  overflow-x: hidden; /* Anti scroll samping */
+  overflow-x: hidden;
 }
 
-/* Biar scroll-nya mulus kalau klik menu */
 html {
   scroll-behavior: smooth;
 }

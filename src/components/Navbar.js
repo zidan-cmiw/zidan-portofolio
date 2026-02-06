@@ -6,21 +6,18 @@ import { useGSAP } from "@gsap/react";
 export default function Navbar() {
   const container = useRef();
   
-  // STATE
+
   const [activeLink, setActiveLink] = useState("home");
   const [isScrolled, setIsScrolled] = useState(false);
 
-  // LOGIKA SCROLL
   useEffect(() => {
     const handleScroll = () => {
-      // 1. Logika Warna Background
       if (window.scrollY > 50) {
         setIsScrolled(true);
       } else {
         setIsScrolled(false);
       }
 
-      // 2. Logika Active Link (Spy)
       const sections = ["home", "about", "projects", "contact"];
       sections.forEach((sectionId) => {
         const section = document.getElementById(sectionId);
@@ -46,7 +43,6 @@ export default function Navbar() {
     });
   }, { scope: container });
 
-  // --- STYLE ---
   const styles = {
     navbar: {
       position: "fixed",
@@ -58,19 +54,14 @@ export default function Navbar() {
       display: "flex",
       alignItems: "center",
       justifyContent: "center",
-      transition: "all 0.4s ease", // Transisi halus
-      
-      // PERBAIKAN DI SINI:
-      // Kalo discroll -> Hitam Transparan + Blur (Glass Effect)
-      // Kalo diatas -> Transparan total
+      transition: "all 0.4s ease", 
       backgroundColor: isScrolled ? "rgba(5, 5, 5, 0.85)" : "transparent",
       backdropFilter: isScrolled ? "blur(12px)" : "none", 
-      borderBottom: isScrolled ? "1px solid rgba(255,255,255,0.05)" : "none", // Garis tipis premium
-    },
+      borderBottom: isScrolled ? "1px solid rgba(255,255,255,0.05)" : "none", },
     container: {
       width: "100%",
       maxWidth: "1400px",
-      padding: "0 40px",
+      padding: "10px 127px",
       display: "flex",
       justifyContent: "space-between",
       alignItems: "center",
@@ -81,7 +72,7 @@ export default function Navbar() {
       letterSpacing: "-1px",
       textDecoration: "none",
       cursor: "pointer",
-      color: "white", // FIX: Selalu Putih (Jangan hitam)
+      color: "white",
       transition: "color 0.4s ease",
     },
     menu: {
@@ -99,7 +90,7 @@ export default function Navbar() {
       cursor: "pointer",
       paddingBottom: "5px",
       position: "relative",
-      color: "white", // FIX: Default Putih
+      color: "white", 
     },
   };
 
@@ -108,17 +99,12 @@ export default function Navbar() {
       <nav style={styles.navbar}>
         <div style={styles.container}>
           
-          {/* LOGO */}
           <div className="nav-item" style={styles.logo}>
             ZIDAN<span style={{ color: "#00ff44" }}>.</span>
           </div>
-
-          {/* MENU */}
-          <div style={styles.menu}>
+            <div style={styles.menu}>
             {["home", "about", "projects", "contact"].map((item, i) => {
               const isActive = activeLink === item;
-              
-              // FIX: Teks selalu Putih (atau Hijau kalau aktif), tidak pernah Hitam
               const textColor = isActive ? "#00ff44" : "white";
 
               return (
@@ -129,7 +115,7 @@ export default function Navbar() {
                     ...styles.link,
                     color: textColor,
                     borderBottom: isActive ? "2px solid #00ff44" : "2px solid transparent",
-                    opacity: isActive ? 1 : 0.8 // Efek redup dikit kalau gak aktif
+                    opacity: isActive ? 1 : 0.8 
                   }}
                   onClick={() => setActiveLink(item)}
                   onMouseEnter={(e) => e.target.style.opacity = 1}

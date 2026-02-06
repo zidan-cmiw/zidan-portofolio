@@ -11,11 +11,7 @@ export default function SocialLinks() {
   ];
 
   return (
-    <div className="w-full flex justify-center px-4">
-      {/* PERUBAHAN PENTING:
-         1. gap-x-12 (HP) -> gap-x-24 (Laptop): Jarak antar kata sangat jauh.
-         2. leading-loose: Jarak antar baris jika turun ke bawah lebih lega.
-      */}
+    <div className="w-full flex justify-center px-4">    
       <div className="flex flex-wrap justify-center items-center gap-x-12 gap-y-10 md:gap-x-24">
         {links.map((link, i) => (
           <a

@@ -1,9 +1,8 @@
 import "./globals.css";
 import Navbar from "@/components/Navbar";
 import SmoothScroll from "@/components/SmoothScroll";
-import { DM_Sans } from "next/font/google"; // Import Font Modern
+import { DM_Sans } from "next/font/google"; 
 
-// Konfigurasi Font DM Sans
 const dmSans = DM_Sans({ 
   subsets: ["latin"], 
   weight: ["400", "500", "700"],
@@ -18,7 +17,6 @@ export const metadata = {
 export default function RootLayout({ children }) {
   return (
     <html lang="en">
-      {/* Terapkan class font ke body */}
       <body className={`${dmSans.className} bg-white text-black antialiased`}>
         <SmoothScroll>
           <Navbar />
