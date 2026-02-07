@@ -10,7 +10,7 @@ const dmSans = DM_Sans({
 });
 
 export const metadata = {
-  title: "Zidan Portfolio",
+  title: "Zidane's Portfolio",
   description: "Full Stack Developer Portfolio",
   icons: {
     icon: '/favicon.png',

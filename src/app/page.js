@@ -1,13 +1,17 @@
 "use client";
 import { useState, useEffect } from "react";
-import ProjectCard from "@/components/ProjectCard";
+import ProjectCardHorizontal from "@/components/ProjectCardHorizontal";
 import SocialLinks from "@/components/SocialLinks";
 
 export default function Home() {
-  const projects = [
-    { title: "CarbonTrack", tech: "Next.js • Team Lead", description: "Leader-led carbon footprint tracker developed for the Techcomfest 2026 competition.", link: "#" },
-    { title: "FoodLover AI", tech: "Python • University", description: "AI-powered recipe assistant featuring Neural Network integration.", link: "#" },
-    { title: "Year Progress", tech: "Vanilla JS • Personal", description: "Interactive visualizer that gamifies your progress through the current year.", link: "#" }
+  const projectsList = [
+    {
+      title: "CarbonTrack",
+      description: "A full-stack web application to track and reduce daily carbon footprint through activity logging, gamified missions, AI eco-assistant, and social features.",
+      link: "https://carbon-track-web.vercel.app/",
+      image: "/projects/carbontrack.png",
+      year: "2025"
+    },
   ];
 
   const [hideScrollText, setHideScrollText] = useState(false);
@@ -84,10 +88,10 @@ export default function Home() {
               <h1 className="text-[60px] font-bold tracking-tight text-black leading-[1.1] mb-8">
                 I am a <br />
                 <div className="flex items-center justify-center mt-2 h-[1.3em]"> 
-                  <span className="text-black relative inline-block">
+                  <span className="text-black relative inline-block typing-wrapper">
                     <span className="typing-text">{typingText}</span>
+                    <span className="typing-cursor">|</span>
                   </span>
-                  <span className="ml-3 w-3 h-[0.7em] bg-black blinking-cursor"></span>
                 </div>
               </h1>
               <p className="text-[20px] text-gray-600 max-w-2xl leading-relaxed mb-8">
@@ -98,7 +102,7 @@ export default function Home() {
         </div>
 
         <div className={`absolute top-[90vh] left-1/2 transform -translate-x-1/2 z-50 transition-all duration-500 ${hideScrollText ? 'opacity-0 translate-y-4 pointer-events-none' : 'opacity-100 translate-y-0'}`}>
-          <div 
+          <div
             className="flex flex-col items-center gap-2 text-xs font-mono tracking-[0.2em] uppercase text-gray-500 animate-bounce cursor-pointer hover:text-black transition-colors"
             onClick={() => {
               const element = document.getElementById('about');
@@ -120,7 +124,7 @@ export default function Home() {
 
 
       <section id="about" className="w-full bg-gray-100 text-black relative z-20 overflow-hidden" style={{ paddingLeft: '50px', paddingRight: '50px', paddingTop: '80px', paddingBottom: '80px' }}>
-        <div className="w-full max-w-[1200px] mx-auto px-12 relative z-10">
+        <div className="w-full max-w-[1200px] mx-auto px-12 relative z-10" style={{ marginTop: '10px' }}>
             
             <div style={{ marginBottom: '16px' }}>
               <h2 className="text-[60px] font-black text-black" style={{ margin: 0 }}>About Me</h2>
@@ -158,7 +162,7 @@ export default function Home() {
 
               <div className="flex justify-center lg:justify-end items-start">
                 <div className="relative mt-[-80px]">
-                  <div className="w-[400px] h-[400px] rounded-full overflow-hidden border-1 border-gray-300 shadow-2xl">
+                  <div className="w-[400px] h-[400px] rounded-full overflow-hidden border-none border-gray-300 shadow-2xl">
                     <img 
                       src="/profile.jpg" 
                       alt="Zidan" 
@@ -175,41 +179,54 @@ export default function Home() {
       </section>
 
 
-      <section id="projects" className="w-full bg-white text-black relative z-20 overflow-hidden" style={{ paddingLeft: '50px', paddingRight: '50px', paddingTop: '80px', paddingBottom: '80px' }}>"
+      <section id="projects" className="w-full bg-white text-black relative z-20 overflow-hidden" style={{ paddingLeft: '50px', paddingRight: '50px', paddingTop: '80px', paddingBottom: '80px' }}>
         <div className="w-full max-w-[1200px] mx-auto">
-          <h2 className="text-sm font-bold uppercase tracking-[0.4em] text-gray-600 mb-20">02 — Selected Works</h2>
-          <div className="flex flex-col gap-20">
-            {projects.map((p, i) => (
-              <ProjectCard key={i} {...p} />
+          <div style={{ marginBottom: '40px' }}>
+            <h2 className="text-[60px] font-black text-black" style={{ margin: 0 }}>Projects</h2>
+            <p className="text-gray-600 text-[18px] mt-4">
+              There are some of my projects, <a href="https://github.com/zidan-cmiw" target="_blank" rel="noopener noreferrer" className="underline text-black font-semibold hover:text-gray-700 transition-colors">visit my Github</a> to see the others.
+            </p>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            {projectsList.map((project, index) => (
+              <ProjectCardHorizontal 
+                key={index}
+                title={project.title}
+                description={project.description}
+                link={project.link}
+                image={project.image}
+                year={project.year}
+              />
             ))}
           </div>
         </div>
       </section>
 
 
-      <section id="contact" className="py-32 px-12 border-t border-gray-200 text-center bg-gray-100 text-black">
+      <section id="contact" className="py-32 px-12 border-t border-gray-700 text-center bg-gray-800 text-white">
         <div className="w-full max-w-[1200px] mx-auto">
-          <h2 className="text-[60px] font-black tracking-tighter mb-24 text-black">
-            LET'S TALK<span className="text-gray-400">.</span>
-          </h2>
-          <SocialLinks />
-          <p className="mt-32 text-gray-600 text-[20px] font-bold tracking-[0-5em] uppercase">
-            © 2025 ZIDAN PORTFOLIO
-          </p>
         </div>
       </section>
 
       <style jsx>{`
+        .typing-wrapper {
+          display: inline-flex;
+          align-items: center;
+        }
         .typing-text {
           display: inline-block;
           min-width: 20px;
         }
-        .blinking-cursor {
-          animation: blink 1s step-end infinite;
+        .typing-cursor {
+          display: inline-block;
+          margin-left: 2px;
+          font-weight: 400;
+          animation: blink 0.8s infinite;
         }
         @keyframes blink {
-          0%, 100% { opacity: 1; }
-          50% { opacity: 0; }
+          0%, 49% { opacity: 1; }
+          50%, 100% { opacity: 0; }
         }
       `}</style>
     </main>

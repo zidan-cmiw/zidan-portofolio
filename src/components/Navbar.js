@@ -11,23 +11,42 @@ export default function Navbar() {
   const [isScrolled, setIsScrolled] = useState(false);
 
   useEffect(() => {
+    const detectActiveSection = () => {
+      const sections = ["home", "about", "projects", "contact"];
+      let currentSection = "home";
+
+      sections.forEach((sectionId) => {
+        const section = document.getElementById(sectionId);
+        if (section) {
+          const rect = section.getBoundingClientRect();
+          const navbarHeight = 80;
+          
+          if (rect.top <= navbarHeight + 100 && rect.bottom > navbarHeight + 50) {
+            currentSection = sectionId;
+          }
+        }
+      });
+
+      return currentSection;
+    };
+
+    const detectInitialSection = () => {
+      const initialSection = detectActiveSection();
+      setActiveLink(initialSection);
+    };
+
+    detectInitialSection();
+    setTimeout(detectInitialSection, 100);
+
     const handleScroll = () => {
       if (window.scrollY > 50) {
         setIsScrolled(true);
       } else {
         setIsScrolled(false);
       }
-
-      const sections = ["home", "about", "projects", "contact"];
-      sections.forEach((sectionId) => {
-        const section = document.getElementById(sectionId);
-        if (section) {
-          const rect = section.getBoundingClientRect();
-          if (rect.top >= -150 && rect.top < window.innerHeight / 2) {
-            setActiveLink(sectionId);
-          }
-        }
-      });
+      
+      const currentSection = detectActiveSection();
+      setActiveLink(currentSection);
     };
 
     window.addEventListener("scroll", handleScroll);
