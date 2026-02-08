@@ -76,25 +76,23 @@ export default function Home() {
 
       <section id="home" className="w-full min-h-screen bg-white text-black relative z-20 overflow-hidden">
         
-
-        <div className="flex items-center justify-center w-full max-w-[1200px] mx-auto px-12 z-10 min-h-screen">
+        <div className="flex items-center justify-center w-full max-w-[1200px] mx-auto px-4 sm:px-6 md:px-8 lg:px-12 z-10 min-h-screen">
           <div className="flex flex-col items-center justify-center text-center w-full"> 
             
-
-            <div className="flex flex-col justify-center items-center" style={{ marginTop: '-80px' }}>
-              <h2 className="text-[48px] font-medium text-gray-600 mb-6 animate-fadeIn">
+            <div className="flex flex-col justify-center items-center -mt-12 sm:-mt-16 md:-mt-20">
+              <h2 className="text-xl sm:text-2xl md:text-4xl lg:text-[48px] font-medium text-gray-600 mb-2 sm:mb-3 md:mb-6 animate-fadeIn">
                 Hi, I'm <span className="text-black font-bold">Zidan</span>.
               </h2>
-              <h1 className="text-[60px] font-bold tracking-tight text-black leading-[1.1] mb-8">
+              <h1 className="text-2xl sm:text-3xl md:text-5xl lg:text-[60px] font-bold tracking-tight text-black leading-[1.3] sm:leading-[1.2] md:leading-[1.1] mb-3 sm:mb-5 md:mb-8">
                 I am a <br />
-                <div className="flex items-center justify-center mt-2 h-[1.3em]"> 
+                <span className="block mt-1 sm:mt-2">
                   <span className="text-black relative inline-block typing-wrapper">
                     <span className="typing-text">{typingText}</span>
                     <span className="typing-cursor">|</span>
                   </span>
-                </div>
+                </span>
               </h1>
-              <p className="text-[20px] text-gray-600 max-w-2xl leading-relaxed mb-8">
+              <p className="text-xs sm:text-sm md:text-base lg:text-[20px] text-gray-600 max-w-2xl leading-relaxed mb-5 sm:mb-6 md:mb-8">
                 Building Intelligent Solutions through Machine Learning and AI to Transform Data into Actionable Insights.
               </p>
             </div>
@@ -103,7 +101,7 @@ export default function Home() {
 
         <div className={`absolute top-[90vh] left-1/2 transform -translate-x-1/2 z-50 transition-all duration-500 ${hideScrollText ? 'opacity-0 translate-y-4 pointer-events-none' : 'opacity-100 translate-y-0'}`}>
           <div
-            className="flex flex-col items-center gap-2 text-xs font-mono tracking-[0.2em] uppercase text-gray-500 animate-bounce cursor-pointer hover:text-black transition-colors"
+            className="flex flex-col items-center gap-1 sm:gap-2 text-[10px] sm:text-xs font-mono tracking-[0.2em] uppercase text-gray-500 animate-bounce cursor-pointer hover:text-black transition-colors"
             onClick={() => {
               const element = document.getElementById('about');
               if (element) {
@@ -116,8 +114,8 @@ export default function Home() {
               }
             }}
           >
-            <span className="mt-[-20px]">Scroll to explore</span>
-            <span className="text-lg" style={{ marginTop: '20px' }}>↓</span>
+            <span className="mt-[-10px] sm:mt-[-20px]">Scroll to explore</span>
+            <span className="text-base sm:text-lg mt-3 sm:mt-5">↓</span>
           </div>
         </div>
       </section>
