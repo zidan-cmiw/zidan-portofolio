@@ -121,16 +121,77 @@ export default function Home() {
       </section>
 
 
-      <section id="about" className="w-full bg-gray-100 text-black relative z-20 overflow-hidden" style={{ paddingLeft: '50px', paddingRight: '50px', paddingTop: '80px', paddingBottom: '80px' }}>
-        <div className="w-full max-w-[1200px] mx-auto px-12 relative z-10" style={{ marginTop: '10px' }}>
+      <section id="about" className="w-full bg-gray-100 text-black relative z-20">
+        <div className="max-w-[1200px] mx-auto relative z-10" style={{ paddingTop: '50px', paddingBottom: '50px', paddingLeft: '50px', paddingRight: '50px', width: '100%', boxSizing: 'border-box' }}>
             
-            <div style={{ marginBottom: '16px' }}>
-              <h2 className="text-[60px] font-black text-black" style={{ margin: 0 }}>About Me</h2>
-            </div>
+            <div className="desktop-view">
+              <div style={{ marginBottom: '16px' }}>
+                <h2 className="text-[60px] font-black text-black" style={{ margin: 0 }}>About Me</h2>
+              </div>
               <div className="grid grid-cols-2 gap-16 items-center">
-              <div className="space-y-6">
-                <div>
-                  <p className="text-gray-700 text-[20px] leading-relaxed text-justify" style={{ marginTop: '1px' }}>
+                <div className="space-y-6">
+                  <div>
+                    <p className="text-gray-700 text-[20px] leading-relaxed text-justify" style={{ marginTop: '1px' }}>
+                      I am a college student majoring in <span className="text-black font-semibold">Informatics Engineering Education</span> at <span className="text-black font-semibold">Yogyakarta State University</span>. 
+                      I have created several systems for universities, and competitions. 
+                      I have good leadership, time management, and communication skills. 
+                      Currently developing my <span className="text-black font-semibold">full-stack website development skills</span> and exploring the world of <span className="text-black font-semibold">AI integration</span>.
+                    </p>
+                  </div>
+
+                  <div className="pt-4" style={{ marginTop: '60px' }}>
+                    <button 
+                      className="download-cv-btn"
+                      onClick={() => {
+                        const link = document.createElement('a');
+                        link.href = '/cv.pdf';
+                        link.download = 'Zidan_CV.pdf';
+                        document.body.appendChild(link);
+                        link.click();
+                        document.body.removeChild(link);
+                      }}
+                    >
+                      <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={2.5} stroke="currentColor">
+                        <path strokeLinecap="round" strokeLinejoin="round" d="M19.5 14.25v-2.625a3.375 3.375 0 00-3.375-3.375h-1.5A1.125 1.125 0 0113.5 7.125v-1.5a3.375 3.375 0 00-3.375-3.375H8.25m2.25 0H5.625c-.621 0-1.125.504-1.125 1.125v17.25c0 .621.504 1.125 1.125 1.125h12.75c.621 0 1.125-.504 1.125-1.125V11.25a9 9 0 00-9-9z" />
+                      </svg>
+                      Download My CV
+                    </button>
+                  </div>
+                </div>
+
+                <div className="flex justify-center lg:justify-end items-start">
+                  <div className="relative" style={{ marginLeft: '40px' }}>
+                    <div className="w-[400px] h-[400px] rounded-full overflow-hidden border-none border-gray-300 shadow-2xl">
+                      <img 
+                        src="/profile.jpg" 
+                        alt="Zidan" 
+                        className="w-full h-full object-cover"
+                      />
+                    </div>
+                    <div className="absolute -bottom-4 -right-4 w-32 h-32 bg-gray-200 rounded-full -z-10"></div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div className="mobile-view">
+              <div className="flex flex-col items-center">
+                <div className="text-center" style={{ marginBottom: '32px' }}>
+                  <h2 className="font-black text-black" style={{ fontSize: '60px', margin: 0 }}>About Me</h2>
+                </div>
+                
+                <div className="relative flex justify-center w-full px-4" style={{ marginTop: '32px', marginBottom: '32px' }}>
+                  <div className="rounded-lg overflow-hidden shadow-xl" style={{ 
+                    width: '70%',
+                    maxWidth: '280px',
+                    aspectRatio: '1/1'
+                  }}>
+                    <img src="/profile.jpg" alt="Zidan" className="w-full h-full object-cover" />
+                  </div>
+                </div>
+
+                <div className="w-full" style={{ marginTop: '32px', marginBottom: '32px' }}>
+                  <p className="text-gray-700 text-[15px] sm:text-[16px] leading-relaxed text-justify">
                     I am a college student majoring in <span className="text-black font-semibold">Informatics Engineering Education</span> at <span className="text-black font-semibold">Yogyakarta State University</span>. 
                     I have created several systems for universities, and competitions. 
                     I have good leadership, time management, and communication skills. 
@@ -138,9 +199,10 @@ export default function Home() {
                   </p>
                 </div>
 
-                <div className="pt-4" style={{ marginTop: '60px' }}>
+                <div className="w-full flex justify-center" style={{ marginTop: '32px' }}>
                   <button 
-                    className="download-cv-btn"
+                    className="download-cv-btn w-full max-w-[280px]"
+                    style={{ justifyContent: 'center' }}
                     onClick={() => {
                       const link = document.createElement('a');
                       link.href = '/cv.pdf';
@@ -157,28 +219,14 @@ export default function Home() {
                   </button>
                 </div>
               </div>
-
-              <div className="flex justify-center lg:justify-end items-start">
-                <div className="relative mt-[-80px]">
-                  <div className="w-[400px] h-[400px] rounded-full overflow-hidden border-none border-gray-300 shadow-2xl">
-                    <img 
-                      src="/profile.jpg" 
-                      alt="Zidan" 
-                      className="w-full h-full object-cover"
-                    />
-                  </div>
-                  <div className="absolute -bottom-4 -right-4 w-32 h-32 bg-gray-200 rounded-full -z-10"></div>
-                </div>
-              </div>
-
             </div>
 
         </div>
       </section>
 
 
-      <section id="projects" className="w-full bg-white text-black relative z-20 overflow-hidden" style={{ paddingLeft: '50px', paddingRight: '50px', paddingTop: '80px', paddingBottom: '80px' }}>
-        <div className="w-full max-w-[1200px] mx-auto">
+      <section id="projects" className="w-full bg-white text-black relative z-20">
+        <div className="max-w-[1200px] mx-auto" style={{ paddingLeft: '50px', paddingRight: '50px', paddingTop: '80px', paddingBottom: '80px', width: '100%', boxSizing: 'border-box' }}>
           <div style={{ marginBottom: '40px' }}>
             <h2 className="text-[60px] font-black text-black" style={{ margin: 0 }}>Projects</h2>
             <p className="text-gray-600 text-[18px] mt-4">
