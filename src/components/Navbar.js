@@ -36,7 +36,7 @@ export default function Navbar() {
 
   useEffect(() => {
     const detectActiveSection = () => {
-      const sections = ["home", "about", "projects", "contact"];
+      const sections = ["home", "about", "projects", "gallery", "contact"];
       let currentSection = "home";
 
       sections.forEach((sectionId) => {
@@ -213,7 +213,7 @@ export default function Navbar() {
 
           {(isMobile === false || isMobile === undefined) && (
             <div style={{...styles.menu, display: 'flex', visibility: isMobile === undefined ? 'hidden' : 'visible'}}>
-              {["home", "about", "projects", "contact"].map((item, i) => {
+              {["home", "about", "projects", "gallery", "contact"].map((item, i) => {
                 const isActive = activeLink === item;
                 const textColor = isActive ? "#000000" : "#000000";
 
@@ -233,7 +233,7 @@ export default function Navbar() {
                       const element = document.getElementById(item);
                       if (element) {
                         const navbarHeight = 80;
-                        const extraOffset = (item === 'about' || item === 'projects') ? 0 : 50;
+                        const extraOffset = (item === 'about' || item === 'projects' || item === 'gallery') ? 0 : 50;
                         const offsetPosition = element.offsetTop - navbarHeight - extraOffset;
                         window.scrollTo({
                           top: offsetPosition,
@@ -277,7 +277,7 @@ export default function Navbar() {
 
       {isMobile === true && (
         <div style={styles.mobileMenu}>
-          {["home", "about", "projects", "contact"].map((item, i) => {
+          {["home", "about", "projects", "gallery", "contact"].map((item, i) => {
             const isActive = activeLink === item;
             
             return (
@@ -295,7 +295,7 @@ export default function Navbar() {
                   const element = document.getElementById(item);
                   if (element) {
                     const navbarHeight = 80;
-                    const extraOffset = (item === 'about' || item === 'projects') ? 0 : 50;
+                    const extraOffset = (item === 'about' || item === 'projects' || item === 'gallery') ? 0 : 50;
                     const offsetPosition = element.offsetTop - navbarHeight - extraOffset;
                     window.scrollTo({
                       top: offsetPosition,

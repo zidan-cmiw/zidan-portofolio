@@ -12,6 +12,20 @@ export default function Home() {
       image: "/projects/carbontrack.png",
       year: "2025"
     },
+    {
+      title: "SafeShore",
+      description: "A web platform providing real-time beach safety information, education, and reporting system to increase awareness and safety for beach visitors.",
+      link: "https://github.com/zidan-cmiw/safeshore",
+      image: "/projects/safeshore.png",
+      year: "2025"
+    },
+    {
+      title: "Year Progress Tracker",
+      description: "A simple, aesthetic web-based tool to track the current year's progress with real-time updates, dynamic year reset, and minimalist terminal-inspired dark mode design.",
+      link: "https://zidan-cmiw.github.io/year-progress/",
+      image: "/projects/yearprogress.png",
+      year: "2025"
+    },
   ];
 
   const [hideScrollText, setHideScrollText] = useState(false);
@@ -41,7 +55,7 @@ export default function Home() {
       });
     }, observerOptions);
 
-    const elements = document.querySelectorAll('.scroll-fade');
+    const elements = document.querySelectorAll('.scroll-fade, .scroll-fade-left, .scroll-fade-right');
     elements.forEach(el => observer.observe(el));
 
     return () => observer.disconnect();
@@ -105,10 +119,10 @@ export default function Home() {
           <div className="flex flex-col items-center justify-center text-center w-full"> 
             
             <div className="flex flex-col justify-center items-center -mt-12 sm:-mt-16 md:-mt-20">
-              <h2 className="text-4xl md:text-5xl lg:text-6xl font-bold tracking-tight text-gray-900 leading-tight mb-4 md:mb-6 fade-in-up">
+              <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold tracking-tight text-gray-900 leading-tight mb-3 md:mb-3 fade-in-up">
                 Hi, I'm Zidan.
               </h2>
-              <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold tracking-tight text-gray-900 leading-tight mb-6 md:mb-8 fade-in-up fade-in-delay-2">
+              <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold tracking-tight text-gray-900 leading-tight mb-6 md:mb-8 fade-in-up fade-in-delay-2">
                 I am a <br />
                 <span className="block mt-2">
                   <span className="text-gray-900 relative inline-block typing-wrapper">
@@ -151,10 +165,10 @@ export default function Home() {
             
             <div className="desktop-view">
               <div className="scroll-fade">
-                <h2 className="text-6xl font-black text-gray-900 m-0">About Me</h2>
+                <h2 className="text-5xl font-black text-gray-900 m-0 mb-6">About Me</h2>
               </div>
               <div className="grid grid-cols-2 gap-16 items-center">
-                <div className="space-y-6 scroll-fade">
+                <div className="space-y-6 scroll-fade-left">
                   <div>
                     <p className="text-gray-600 text-xl leading-relaxed text-justify">
                       I am a college student majoring in Informatics Engineering Education at Yogyakarta State University. 
@@ -184,9 +198,9 @@ export default function Home() {
                   </div>
                 </div>
 
-                <div className="flex justify-center lg:justify-end items-start scroll-fade">
+                <div className="flex justify-center lg:justify-end items-start scroll-fade-right">
                   <div className="relative" style={{ marginLeft: '40px' }}>
-                    <div className="w-[400px] h-[400px] rounded-full overflow-hidden border-none border-gray-300 shadow-2xl">
+                    <div className="w-[370px] h-[370px] rounded-full overflow-hidden border-none shadow-2xl">
                       <img 
                         src="/profile.jpg" 
                         alt="Zidan" 
@@ -201,13 +215,13 @@ export default function Home() {
             <div className="mobile-view">
               <div className="flex flex-col items-center">
                 <div className="text-center mb-8 scroll-fade">
-                  <h2 className="font-black text-gray-900 text-4xl md:text-6xl">About Me</h2>
+                  <h2 className="font-black text-gray-900 text-3xl md:text-5xl">About Me</h2>
                 </div>
                 
                 <div className="relative flex justify-center w-full px-4 scroll-fade" style={{ marginTop: '32px', marginBottom: '32px' }}>
-                  <div className="rounded-lg overflow-hidden shadow-xl" style={{ 
-                    width: '70%',
-                    maxWidth: '280px',
+                  <div className="overflow-hidden shadow-xl" style={{ 
+                    width: '100%',
+                    maxWidth: '300px',
                     aspectRatio: '1/1'
                   }}>
                     <img src="/profile.jpg" alt="Zidan" className="w-full h-full object-cover" />
@@ -252,7 +266,7 @@ export default function Home() {
       <section id="projects" className="w-full bg-white text-gray-900 p-15 p-auto relative z-20">
         <div className="max-w-[1200px] mx-auto w-full box-border">
           <div className="mb-10 scroll-fade">
-            <h2 className="text-4xl md:text-5xl lg:text-6xl font-black text-gray-900 m-0">Projects</h2>
+            <h2 className="text-3xl md:text-4xl lg:text-5xl font-black text-gray-900 m-0">Projects</h2>
             <p className="text-gray-600 text-base md:text-lg mt-4">
               There are some of my projects, <a href="https://github.com/zidan-cmiw" target="_blank" rel="noopener noreferrer" className="underline text-gray-900 font-semibold hover:text-gray-700 transition-colors">visit my Github</a> to see the others.
             </p>
@@ -274,8 +288,28 @@ export default function Home() {
       </section>
 
 
-      <section id="contact" className="py-32 px-12 border-t border-gray-700 text-center bg-gray-800 text-white">
-        <div className="w-full max-w-[1200px] mx-auto">
+      <section id="gallery" className="w-full bg-gray-100 text-gray-900 relative z-20 p-15 p-auto">
+        <div className="max-w-[1200px] mx-auto w-full">
+          <div className="mb-10 z-21 scroll-fade">
+            <h2 className="text-3xl md:text-4xl lg:text-5xl font-black text-gray-900 m-0">Gallery</h2>
+            <p className="text-gray-600 text-base md:text-lg mt-4">
+              My certificates, achievements, and memorable moments.
+            </p>
+          </div>
+
+        </div>
+      </section>
+
+
+      <section id="contact" className="w-full bg-white text-gray-900 relative z-20 p-15 p-auto">
+        <div className="max-w-[1200px] mx-auto w-full">
+          <div className="mb-10 z-21 scroll-fade">
+            <h2 className="text-3xl md:text-4xl lg:text-5xl font-black text-gray-900 m-0">Gallery</h2>
+            <p className="text-gray-600 text-base md:text-lg mt-4">
+              My certificates, achievements, and memorable moments.
+            </p>
+          </div>
+
         </div>
       </section>
 
