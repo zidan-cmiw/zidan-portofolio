@@ -1,7 +1,9 @@
 "use client";
 import { useState, useEffect, useRef } from "react";
+import emailjs from '@emailjs/browser';
 import ProjectCardHorizontal from "@/components/ProjectCardHorizontal";
 import SocialLinks from "@/components/SocialLinks";
+import Guestbook from "@/components/Guestbook";
 
 export default function Home() {
   const projectsList = [
@@ -28,16 +30,77 @@ export default function Home() {
     },
   ];
 
+  const galleryItems = [
+    { id: 1, category: 'certificates', image: '/gallery/certificates/cert1.jpg' },
+    { id: 2, category: 'certificates', image: '/gallery/certificates/cert2.png' },
+    { id: 3, category: 'certificates', image: '/gallery/certificates/cert3.png' },
+    { id: 4, category: 'achievements', image: '/gallery/achievements/achievement1.jpg' },
+    { id: 5, category: 'achievements', image: '/gallery/achievements/achievement2.jpg' },
+    { id: 6, category: 'achievements', image: '/gallery/achievements/achievement3.jpg' },
+    { id: 7, category: 'random', image: '/gallery/random/photo1.jpg' },
+    { id: 8, category: 'random', image: '/gallery/random/photo2.jpg' },
+    { id: 9, category: 'random', image: '/gallery/random/photo3.jpg' },
+    { id: 10, category: 'random', image: '/gallery/random/photo4.jpg' },
+  ];
+
   const [hideScrollText, setHideScrollText] = useState(false);
   const [typingText, setTypingText] = useState("");
   const [isDeleting, setIsDeleting] = useState(false);
   const [loopNum, setLoopNum] = useState(0);
   const [typingSpeed, setTypingSpeed] = useState(150);
+  const [activeFilter, setActiveFilter] = useState('all');
+  const [filteredGallery, setFilteredGallery] = useState(galleryItems);
+  const [selectedImage, setSelectedImage] = useState(null);
+
+  const [contactForm, setContactForm] = useState({ name: '', email: '', message: '' });
+  const [sendingEmail, setSendingEmail] = useState(false);
+  const [emailStatus, setEmailStatus] = useState({ type: '', message: '' });
+  const contactFormRef = useRef();
 
   const textArray = ["Full Stack Developer", "Machine Learning Engineer", "Techcomfest Team Lead"];
 
   const aboutRef = useRef(null);
   const projectsRef = useRef(null);
+
+  const handleContactSubmit = async (e) => {
+    e.preventDefault();
+    
+    if (!contactForm.name || !contactForm.email || !contactForm.message) {
+      setEmailStatus({ type: 'error', message: 'Please fill in all fields' });
+      return;
+    }
+
+    setSendingEmail(true);
+    setEmailStatus({ type: '', message: '' });
+
+    try {
+      const result = await emailjs.sendForm(
+        process.env.NEXT_PUBLIC_EMAILJS_SERVICE_ID,
+        process.env.NEXT_PUBLIC_EMAILJS_TEMPLATE_ID,
+        contactFormRef.current,
+        process.env.NEXT_PUBLIC_EMAILJS_PUBLIC_KEY
+      );
+
+      if (result.text === 'OK') {
+        setEmailStatus({ type: 'success', message: '✓ Message sent successfully! I\'ll get back to you soon.' });
+        setContactForm({ name: '', email: '', message: '' });
+      }
+    } catch (error) {
+      console.error('EmailJS Error:', error);
+      setEmailStatus({ type: 'error', message: '✗ Failed to send message. Please try again or contact me directly via email.' });
+    } finally {
+      setSendingEmail(false);
+      setTimeout(() => setEmailStatus({ type: '', message: '' }), 5000);
+    }
+  };
+
+  useEffect(() => {
+    if (activeFilter === 'all') {
+      setFilteredGallery(galleryItems);
+    } else {
+      setFilteredGallery(galleryItems.filter(item => item.category === activeFilter));
+    }
+  }, [activeFilter]);
 
   useEffect(() => {
     const observerOptions = {
@@ -202,7 +265,7 @@ export default function Home() {
                   <div className="relative" style={{ marginLeft: '40px' }}>
                     <div className="w-[370px] h-[370px] rounded-full overflow-hidden border-none shadow-2xl">
                       <img 
-                        src="/profile.jpg" 
+                        src="/profile.jpeg" 
                         alt="Zidan" 
                         className="w-full h-full object-cover my-auto"
                       />
@@ -224,7 +287,7 @@ export default function Home() {
                     maxWidth: '300px',
                     aspectRatio: '1/1'
                   }}>
-                    <img src="/profile.jpg" alt="Zidan" className="w-full h-full object-cover" />
+                    <img src="/profile.jpeg" alt="Zidan" className="w-full h-full object-cover" />
                   </div>
                 </div>
 
@@ -297,6 +360,101 @@ export default function Home() {
             </p>
           </div>
 
+          <div className="flex flex-wrap gap-3 mb-8 justify-center md:justify-start scroll-fade">
+            <button
+              onClick={() => setActiveFilter('all')}
+              className={`px-6 py-2.5 rounded-full font-semibold transition-all duration-300 ${
+                activeFilter === 'all'
+                  ? 'bg-gray-900 text-white shadow-lg scale-105'
+                  : 'bg-white text-gray-700 hover:bg-gray-200 shadow-md'
+              }`}
+            >
+              All
+            </button>
+            <button
+              onClick={() => setActiveFilter('certificates')}
+              className={`px-6 py-2.5 rounded-full font-semibold transition-all duration-300 ${
+                activeFilter === 'certificates'
+                  ? 'bg-gray-900 text-white shadow-lg scale-105'
+                  : 'bg-white text-gray-700 hover:bg-gray-200 shadow-md'
+              }`}
+            >
+              Certificates
+            </button>
+            <button
+              onClick={() => setActiveFilter('achievements')}
+              className={`px-6 py-2.5 rounded-full font-semibold transition-all duration-300 ${
+                activeFilter === 'achievements'
+                  ? 'bg-gray-900 text-white shadow-lg scale-105'
+                  : 'bg-white text-gray-700 hover:bg-gray-200 shadow-md'
+              }`}
+            >
+              Achievements
+            </button>
+            <button
+              onClick={() => setActiveFilter('random')}
+              className={`px-6 py-2.5 rounded-full font-semibold transition-all duration-300 ${
+                activeFilter === 'random'
+                  ? 'bg-gray-900 text-white shadow-lg scale-105'
+                  : 'bg-white text-gray-700 hover:bg-gray-200 shadow-md'
+              }`}
+            >
+              Random Photos
+            </button>
+          </div>
+
+          
+          <div className="masonry-grid scroll-fade">
+            {filteredGallery.map((item, index) => (
+              <div
+                key={item.id}
+                className="masonry-item group cursor-pointer"
+                onClick={() => setSelectedImage(item)}
+                style={{ animationDelay: `${index * 0.1}s` }}
+              >
+                <div className="relative overflow-hidden rounded-lg shadow-lg hover:shadow-2xl transition-all duration-300 bg-white">
+                  <div className="aspect-[4/3] overflow-hidden">
+                    <img
+                      src={item.image}
+                      alt="Gallery image"
+                      className="w-full h-full object-cover transform group-hover:scale-110 transition-transform duration-500"
+                      onError={(e) => {
+                        e.target.src = 'data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" width="400" height="300"%3E%3Crect fill="%23e5e7eb" width="400" height="300"/%3E%3Ctext fill="%239ca3af" font-family="sans-serif" font-size="18" dy="10.5" font-weight="bold" x="50%25" y="50%25" text-anchor="middle"%3EImage%3C/text%3E%3C/svg%3E';
+                      }}
+                    />
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div>
+
+          {filteredGallery.length === 0 && (
+            <div className="text-center py-16 scroll-fade">
+              <p className="text-gray-500 text-lg">No items found in this category.</p>
+            </div>
+          )}
+
+          {selectedImage && (
+            <div
+              className="fixed inset-0 bg-black/90 z-50 flex items-center justify-center p-4 pt-25 p-auto animate-fadeIn"
+              onClick={() => setSelectedImage(null)}
+            >
+              <button
+                className="absolute top-4 right-4 text-white hover:text-gray-300 transition-colors z-10"
+                onClick={() => setSelectedImage(null)}
+              >
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={2} stroke="currentColor" className="w-8 h-8">
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />
+                </svg>
+              </button>
+              <img
+                src={selectedImage.image}
+                alt="Gallery image"
+                className="max-w-full max-h-[85vh] object-contain rounded-lg animate-scaleIn"
+                onClick={(e) => e.stopPropagation()}
+              />
+            </div>
+          )}
         </div>
       </section>
 
@@ -304,12 +462,114 @@ export default function Home() {
       <section id="contact" className="w-full bg-white text-gray-900 relative z-20 p-15 p-auto">
         <div className="max-w-[1200px] mx-auto w-full">
           <div className="mb-10 z-21 scroll-fade">
-            <h2 className="text-3xl md:text-4xl lg:text-5xl font-black text-gray-900 m-0">Gallery</h2>
+            <h2 className="text-3xl md:text-4xl lg:text-5xl font-black text-gray-900 m-0">Contact Me</h2>
             <p className="text-gray-600 text-base md:text-lg mt-4">
-              My certificates, achievements, and memorable moments.
+              Let's connect! Feel free to reach out for collaborations or just a friendly chat.
             </p>
           </div>
 
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-8 scroll-fade">
+            <div className="space-y-6">
+              <div className="flex items-start gap-4">
+                <div className="w-12 h-12 bg-gray-900 rounded-lg flex items-center justify-center flex-shrink-0">
+                  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={2} stroke="currentColor" className="w-6 h-6 text-white">
+                    <path strokeLinecap="round" strokeLinejoin="round" d="M21.75 6.75v10.5a2.25 2.25 0 01-2.25 2.25h-15a2.25 2.25 0 01-2.25-2.25V6.75m19.5 0A2.25 2.25 0 0019.5 4.5h-15a2.25 2.25 0 00-2.25 2.25m19.5 0v.243a2.25 2.25 0 01-1.07 1.916l-7.5 4.615a2.25 2.25 0 01-2.36 0L3.32 8.91a2.25 2.25 0 01-1.07-1.916V6.75" />
+                  </svg>
+                </div>
+                <div>
+                  <h3 className="font-bold text-lg mb-1">Email</h3>
+                  <a href="mailto:b3nny.haryant0@gmail.com" className="text-gray-600 hover:text-gray-900 transition-colors">
+                    b3nny.haryant0@gmail.com
+                  </a>
+                </div>
+              </div>
+
+              <div className="flex items-start gap-4">
+                <div className="w-12 h-12 bg-gray-900 rounded-lg flex items-center justify-center flex-shrink-0">
+                  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={2} stroke="currentColor" className="w-6 h-6 text-white">
+                    <path strokeLinecap="round" strokeLinejoin="round" d="M15 10.5a3 3 0 11-6 0 3 3 0 016 0z" />
+                    <path strokeLinecap="round" strokeLinejoin="round" d="M19.5 10.5c0 7.142-7.5 11.25-7.5 11.25S4.5 17.642 4.5 10.5a7.5 7.5 0 1115 0z" />
+                  </svg>
+                </div>
+                <div>
+                  <h3 className="font-bold text-lg mb-1">Location</h3>
+                  <p className="text-gray-600">Yogyakarta, Indonesia</p>
+                </div>
+              </div>
+
+              <div className="pt-4">
+                <h3 className="font-bold text-lg mb-4">Follow Me</h3>
+                <SocialLinks />
+              </div>
+            </div>
+
+            <form ref={contactFormRef} onSubmit={handleContactSubmit} className="space-y-4">
+              <div>
+                <label htmlFor="from_name" className="block text-sm font-semibold mb-2">Name</label>
+                <input
+                  type="text"
+                  id="from_name"
+                  name="from_name"
+                  value={contactForm.name}
+                  onChange={(e) => setContactForm({ ...contactForm, name: e.target.value })}
+                  className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-gray-900 focus:border-transparent transition-all"
+                  placeholder="Your name"
+                  disabled={sendingEmail}
+                  required
+                />
+              </div>
+              <div>
+                <label htmlFor="from_email" className="block text-sm font-semibold mb-2">Email</label>
+                <input
+                  type="email"
+                  id="from_email"
+                  name="from_email"
+                  value={contactForm.email}
+                  onChange={(e) => setContactForm({ ...contactForm, email: e.target.value })}
+                  className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-gray-900 focus:border-transparent transition-all"
+                  placeholder="your.email@example.com"
+                  disabled={sendingEmail}
+                  required
+                />
+              </div>
+              <div>
+                <label htmlFor="message" className="block text-sm font-semibold mb-2">Message</label>
+                <textarea
+                  id="message"
+                  name="message"
+                  value={contactForm.message}
+                  onChange={(e) => setContactForm({ ...contactForm, message: e.target.value })}
+                  rows="5"
+                  className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-gray-900 focus:border-transparent transition-all resize-none"
+                  placeholder="Your message..."
+                  disabled={sendingEmail}
+                  required
+                ></textarea>
+              </div>
+
+              {emailStatus.message && (
+                <div className={`px-4 py-3 rounded-lg ${
+                  emailStatus.type === 'success' 
+                    ? 'bg-green-50 border border-green-200 text-green-800' 
+                    : 'bg-red-50 border border-red-200 text-red-800'
+                }`}>
+                  {emailStatus.message}
+                </div>
+              )}
+
+              <button
+                type="submit"
+                disabled={sendingEmail}
+                className="w-full bg-gray-900 text-white font-semibold py-3 px-6 rounded-lg hover:bg-gray-800 transition-all duration-300 shadow-lg hover:shadow-xl transform hover:scale-[1.02] disabled:opacity-50 disabled:cursor-not-allowed disabled:transform-none"
+              >
+                {sendingEmail ? 'Sending...' : 'Send Message'}
+              </button>
+            </form>
+          </div>
+
+          <div className="mt-16 scroll-fade">
+            <Guestbook />
+          </div>
         </div>
       </section>
 
